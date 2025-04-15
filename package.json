@@ -1,0 +1,23 @@
+{
+  "name": "oct24-t2w2-nodeintro",
+  "version": "1.0.0",
+  "description": "Introductory node and Express app for CA OCT24 cohort",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriangcodes/oct24-t2w2-nodeintro.git"
+  },
+  "author": "Adrian Gidaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriangcodes/oct24-t2w2-nodeintro/issues"
+  },
+  "homepage": "https://github.com/adriangcodes/oct24-t2w2-nodeintro#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
