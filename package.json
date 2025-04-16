@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Introductory node and Express app for CA OCT24 cohort",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch index.js"
