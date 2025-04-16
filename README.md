@@ -32,3 +32,19 @@
     Add scripts to package.json to launch custom code:
     "dev": "node --watch index.js"
     "npm run dev" creates shortcut to replace "node index.js"
+
+# Mongoose
+    Install - npm i mongoose
+    Import into index.js
+
+# MongoDB default port
+    Run mongosh to determine
+
+# Mongosh
+    show dbs
+    connect to db via mongoose connection string
+    db not created until a collection is created
+    use nodeintro_db
+
+# MongoDB extension
+    Extension installed on LHS menu for better DB navigation

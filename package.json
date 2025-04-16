@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/adriangcodes/oct24-t2w2-nodeintro#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
   }
 }

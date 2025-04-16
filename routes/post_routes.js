@@ -1,4 +1,6 @@
-import express from 'express'
+// import express from 'express' // Imports the default export
+import { Router } from 'express' // Destructures Router from within express module
+import Post from '../models/post.js'
 
 function print(value) {
     console.log(value)
@@ -27,7 +29,7 @@ const posts = [
 ]
 
 // Flask: Blueprint
-const router = express.Router()
+const router = Router()
 
 // Python/Flask:
 // @app.route('/') // default get
@@ -40,6 +42,7 @@ const router = express.Router()
 //     res.send('<h1>Hello there!</h1>') // Provides a callback function
 // })
 
+// Get person
 router.get('/', (req, res) => {
     res.send(person) // Express will automatically define content type as JSON
 })
@@ -47,8 +50,9 @@ router.get('/', (req, res) => {
 // Post routes
 
 // Get all posts
-router.get('/posts', (req, res) => {
-res.send(posts)
+router.get('/posts', async (req, res) => {    
+    // res.send(posts)
+    res.send(await Post.find())
 })
 
 // Get one post
@@ -69,6 +73,15 @@ if (post) {
 })
 
 // Create a new post
+router.post('/posts', (req, res) => {
+    // Get post data from request body
+    const bodyData = req.body
+    print(bodyData)
+    // Create a new Post instance
+    // Commit new Post instance to DB
+    // Send _ to client
+    res.send('POST /posts')
+})
 
 // Update a post
 
