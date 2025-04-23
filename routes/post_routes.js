@@ -13,21 +13,6 @@ const person = {
     age: 35
 }
 
-const posts = [
-    {
-        id: 1,
-        title: 'Post 1',
-        body: 'Lorem ipsum dolor sit amet',
-        isPublished: false
-    },
-    {
-        id: 2,
-        title: 'Post 2',
-        body: 'This is the body of post 2',
-        isPublished: true
-    },
-]
-
 // Flask: Blueprint
 const router = Router()
 
@@ -58,18 +43,18 @@ router.get('/posts', async (req, res) => {
 // Get one post
 // 1. Declare the route
 // Python: @app.route('/posts/<int:id>')
-router.get('/posts/:id', (req, res) => {
-// 2. Get the ID of the post
-const post_id = req.params.id
-// 3. Get the post with the given ID
-const post = posts.find(p => p.id == post_id) // Using == means type coercion will happen
-// 4. Send the post back to the client
-if (post) {
-    res.send(post)
-} else {
-    // Flask/Python: return {}, 404
-    res.status(404).send({error:` Post with id ${post_id} does not exist.`})
-}
+router.get('/posts/:id', async (req, res) => {
+    // 2. Get the ID of the post
+    const post_id = req.params.id
+    // 3. Get the post with the given ID
+    const post = await Post.find({_id: post_id}) // posts.find(p => p.id == post_id) // Using == means type coercion will happen
+    // 4. Send the post back to the client
+    if (post) {
+        res.send(post)
+    } else {
+        // Flask/Python: return {}, 404
+        res.status(404).send({error:` Post with id ${post_id} does not exist.`})
+    }
 })
 
 // Create a new post
