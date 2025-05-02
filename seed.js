@@ -1,10 +1,18 @@
 // import { connect, disconnect } from './db.js'
 import db from "./db.js"
+import Category from "./models/category.js"
 import Post from "./models/post.js"
 
 function print(value) {
     console.log(value)
 }
+
+const categories = [
+    { name: 'Food' },
+    { name: 'Coding' },
+    { name: 'Movies' },
+    { name: 'Other' }
+]
 
 const posts = [
     {
@@ -25,9 +33,15 @@ const posts = [
 db.connect()
 
 // Erase collection
-await Post.deleteMany()
-print('Collection erased.')
+await Category.deleteMany()
+print('Categories erased.')
+// Creates and saves to MongoDB a new Post for each document in posts
+await Category.create(categories)
+print('Categories created.')
 
+// Erase collection
+await Post.deleteMany()
+print('Posts erased.')
 // Creates and saves to MongoDB a new Post for each document in posts
 await Post.create(posts)
 print('Posts created.')
