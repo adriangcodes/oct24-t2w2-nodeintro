@@ -39,7 +39,10 @@ router.get('/', async (req, res) => {
     // res.send(posts)
     res.send(
         await Post
-            .find(req.query.draft ? {} : { isPublished: true }) // Will only return posts where isPublished == true
+            // find argument is selective with a ternary
+            // If req.query.draft is truthy, pass an empty filter (i.e. {})
+            // Else filter to include only published posts
+            .find(req.query.draft ? {} : { isPublished: true })
             // .populate will backpopulate category info with entire document rather than just id
             .populate({
                 path: 'category',
@@ -56,7 +59,7 @@ router.get('/:id', async (req, res) => {
     // 2. Get the ID of the post
     const post_id = req.params.id
     // 3. Get the post with the given ID
-    const post = await Post.find({ _id: post_id }) // posts.find(p => p.id == post_id) // Using == means type coercion will happen
+    const post = await Post.find({ _id: post_id }).populate('category') // posts.find(p => p.id == post_id) // Using == means type coercion will happen
     // 4. Send the post back to the client
     if (post) {
         res.send(post)

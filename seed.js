@@ -28,19 +28,23 @@ print('Categories created.')
 
 const posts = [
     {
-        id: 1,
         title: 'Post 1',
         body: 'Lorem ipsum dolor sit amet',
         isPublished: true,
         category: cats[1]
     },
     {
-        id: 2,
         title: 'Post 2',
         body: 'This is the body of post 2',
         isPublished: false,
         category: cats[3]
     },
+    {
+        title: 'Post 3',
+        body: 'This is the body of post 3 to highlight isPublished',
+        isPublished: true,
+        category: cats[2]
+    }
 ]
 
 // Erase collection
