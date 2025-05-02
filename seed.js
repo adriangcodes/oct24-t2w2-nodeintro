@@ -14,21 +14,6 @@ const categories = [
     { name: 'Other' }
 ]
 
-const posts = [
-    {
-        id: 1,
-        title: 'Post 1',
-        body: 'Lorem ipsum dolor sit amet',
-        isPublished: false
-    },
-    {
-        id: 2,
-        title: 'Post 2',
-        body: 'This is the body of post 2',
-        isPublished: true
-    },
-]
-
 // Connect to DB
 db.connect()
 
@@ -36,13 +21,36 @@ db.connect()
 await Category.deleteMany()
 print('Categories erased.')
 // Creates and saves to MongoDB a new Post for each document in posts
-await Category.create(categories)
+const cats = await Category.create(categories)
 print('Categories created.')
+
+// At this point, categories have been inserted into the db and each assigned an ObjectId
+
+const posts = [
+    {
+        id: 1,
+        title: 'Post 1',
+        body: 'Lorem ipsum dolor sit amet',
+        isPublished: true,
+        category: cats[1]
+    },
+    {
+        id: 2,
+        title: 'Post 2',
+        body: 'This is the body of post 2',
+        isPublished: false,
+        category: cats[3]
+    },
+]
 
 // Erase collection
 await Post.deleteMany()
 print('Posts erased.')
 // Creates and saves to MongoDB a new Post for each document in posts
+// Before we do the next statement, we need to assign a category to each post, otherwise it will fail with a validation error, since category is required.
+// posts[0].category = await Category.findOne({name: 'Coding'})
+// posts[1].category = await Category.findOne({name: 'Other'})
+
 await Post.create(posts)
 print('Posts created.')
 
