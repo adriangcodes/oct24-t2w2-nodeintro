@@ -3,6 +3,7 @@ function print(value) {
 }
 
 // const express = require('express') // CommonJS modules - same thing as import
+import 'dotenv/config'
 import express from 'express' // ES6 modules - requires "type": "module" to be added to package.json
 import cors from 'cors'
 import helmet from 'helmet'
@@ -11,6 +12,8 @@ import post_routes from './routes/post_routes.js'
 import category_routes from './routes/category_routes.js'
 import auth_routes from './routes/auth_routes.js'
 import db from './db.js'
+
+print(process.env)
 
 const app = express()
 const port = 3000
@@ -29,8 +32,11 @@ app.use(auth_routes)
 app.use('/posts', post_routes)
 app.use('/categories', category_routes)
 
-app.use((req, res) => {
-    res.status(404).send(`No route matched: ${req.method} ${req.url}`)
+// Error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    // print(err)
+    res.status(err.status || 500).send({ error: err.message || 'Internal Server Error' })
 })
 
 app.listen(port, async () => { // Starts up server by calling listen method

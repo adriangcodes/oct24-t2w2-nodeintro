@@ -11,6 +11,10 @@ const User = model('User', {
         type: String,
         required: true,
         minLength: 8
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 
