@@ -1,6 +1,8 @@
 // import express from 'express' // Imports the default export
 import { Router } from 'express' // Destructures Router from within express module
+import { expressjwt } from 'express-jwt'
 import Post from '../models/post.js'
+import { auth, adminOnly } from '../auth.js'
 
 function print(value) {
     console.log(value)
@@ -35,8 +37,9 @@ const router = Router()
 // Post routes
 
 // Get all posts
-router.get('/', async (req, res) => {    
+router.get('/', auth, adminOnly, async (req, res) => { // expressjwt phrase could be abstracted out into a function in separate module    
     // res.send(posts)
+    // print(req)
     res.send(
         await Post
             // find argument is selective with a ternary

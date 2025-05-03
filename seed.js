@@ -2,10 +2,18 @@
 import db from "./db.js"
 import Category from "./models/category.js"
 import Post from "./models/post.js"
+import User from "./models/user.js"
 
 function print(value) {
     console.log(value)
 }
+
+// const users = [
+//     {
+//         email: 'hello@example.com',
+//         password: ''
+//     }
+// ]
 
 const categories = [
     { name: 'Food' },
@@ -57,6 +65,10 @@ print('Posts erased.')
 
 await Post.create(posts)
 print('Posts created.')
+
+// Erase users
+await User.deleteMany()
+print('Users erased.')
 
 // We still have a db connection open, so the script won't end
 db.disconnect()
