@@ -35,19 +35,31 @@ const router = Router()
 // Post routes
 
 // Get all posts
-router.get('/posts', async (req, res) => {    
+router.get('/', async (req, res) => {    
     // res.send(posts)
-    res.send(await Post.find())
+    res.send(
+        await Post
+            // find argument is selective with a ternary
+            // If req.query.draft is truthy, pass an empty filter (i.e. {})
+            // Else filter to include only published posts
+            .find(req.query.draft ? {} : { isPublished: true })
+            // .populate will backpopulate category info with entire document rather than just id
+            .populate({
+                path: 'category',
+                select: '-__v -_id' // removes version and id from document
+            })
+            .select('-__v') // removes version from document
+    )
 })
 
 // Get one post
 // 1. Declare the route
 // Python: @app.route('/posts/<int:id>')
-router.get('/posts/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     // 2. Get the ID of the post
     const post_id = req.params.id
     // 3. Get the post with the given ID
-    const post = await Post.find({ _id: post_id }) // posts.find(p => p.id == post_id) // Using == means type coercion will happen
+    const post = await Post.find({ _id: post_id }).populate('category') // posts.find(p => p.id == post_id) // Using == means type coercion will happen
     // 4. Send the post back to the client
     if (post) {
         res.send(post)
@@ -58,7 +70,7 @@ router.get('/posts/:id', async (req, res) => {
 })
 
 // Create a new post
-router.post('/posts', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         // Get post data from request body
         const bodyData = req.body
@@ -89,11 +101,11 @@ async function update(req, res) {
     }
 }
 
-router.put('/posts/:id', update)
-router.patch('/posts/:id', update)
+router.put('/:id', update)
+router.patch('/:id', update)
 
 // Delete a post
-router.delete('/posts/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const post = await Post.findByIdAndDelete(req.params.id)
     if (post) {
         res.status(200).send(post)
